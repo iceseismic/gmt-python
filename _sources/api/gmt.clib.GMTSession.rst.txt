@@ -1,0 +1,8 @@
+« :ref:`api`
+
+:mod:`gmt.clib`.GMTSession
+=======================================
+
+.. currentmodule:: gmt.clib
+
+.. autofunction:: GMTSession

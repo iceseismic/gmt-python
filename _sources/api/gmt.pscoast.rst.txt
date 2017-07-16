@@ -1,0 +1,8 @@
+« :ref:`api`
+
+:mod:`gmt`.pscoast
+===============================
+
+.. currentmodule:: gmt
+
+.. autofunction:: pscoast

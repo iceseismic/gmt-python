@@ -1,0 +1,8 @@
+« :ref:`api`
+
+:mod:`gmt`.psxy
+============================
+
+.. currentmodule:: gmt
+
+.. autofunction:: psxy

@@ -1,0 +1,291 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>gmt.clib.core &#8212; GMT/Python</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gmt.clib.core</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">ctypes wrappers for core functions from the C API</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">constants</span>
+
+
+<div class="viewcode-block" id="load_libgmt"><a class="viewcode-back" href="../../../api/gmt.clib.load_libgmt.html#gmt.clib.load_libgmt">[docs]</a><span class="k">def</span> <span class="nf">load_libgmt</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find and load ``libgmt`` as a ctypes.CDLL.</span>
+
+<span class="sd">    Currently only works for Linux (looks for ``libgmt.so``).</span>
+
+<span class="sd">    Library path must be discoverable, either by being in standard places or by</span>
+<span class="sd">    setting the environment variable ``LD_LIBRARY_PATH``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ctypes.CDLL object</span>
+<span class="sd">        The loaded shared library.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">libgmt</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="s1">&#39;libgmt.so&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">libgmt</span><span class="p">,</span> <span class="s1">&#39;GMT_Create_Session&#39;</span><span class="p">),</span> \
+        <span class="s2">&quot;Error loading libgmt. Can&#39;t access GMT_Create_Session.&quot;</span>
+    <span class="k">return</span> <span class="n">libgmt</span></div>
+
+
+<div class="viewcode-block" id="call_module"><a class="viewcode-back" href="../../../api/gmt.clib.call_module.html#gmt.clib.call_module">[docs]</a><span class="k">def</span> <span class="nf">call_module</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Call a GMT module with the given arguments.</span>
+
+<span class="sd">    Makes a call to ``GMT_Call_Module`` from the C API using mode</span>
+<span class="sd">    ``GMT_MODULE_CMD`` (arguments passed as a single string).</span>
+
+<span class="sd">    Most interactions with the C API are done through this function.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    session : ctypes.c_void_p</span>
+<span class="sd">        A ctypes void pointer to a GMT session created by</span>
+<span class="sd">        :func:`gmt.clib.GMTSession`.</span>
+<span class="sd">    module : str</span>
+<span class="sd">        Module name (``&#39;pscoast&#39;``, ``&#39;psbasemap&#39;``, etc).</span>
+<span class="sd">    args : str</span>
+<span class="sd">        String with the command line arguments that will be passed to the</span>
+<span class="sd">        module (for example, ``&#39;-R0/5/0/10 -JM&#39;``).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">GMT_MODULE_CMD</span>
+    <span class="n">libgmt</span> <span class="o">=</span> <span class="n">load_libgmt</span><span class="p">()</span>
+    <span class="n">c_call_module</span> <span class="o">=</span> <span class="n">libgmt</span><span class="o">.</span><span class="n">GMT_Call_Module</span>
+    <span class="n">c_call_module</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">,</span>
+                              <span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">]</span>
+    <span class="n">c_call_module</span><span class="o">.</span><span class="n">restype</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">c_call_module</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">mode</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="k">assert</span> <span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Failed returning None.&#39;</span>
+    <span class="k">assert</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Failed with status code </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_session"><a class="viewcode-back" href="../../../api/gmt.clib.create_session.html#gmt.clib.create_session">[docs]</a><span class="k">def</span> <span class="nf">create_session</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create the ``GMTAPI_CTRL`` struct required by the GMT C API functions.</span>
+
+<span class="sd">    .. warning::</span>
+
+<span class="sd">        Best not used directly. Use :class:`gmt.clib.GMTSession` instead.</span>
+
+<span class="sd">    It is a C void pointer containing the current session information and</span>
+<span class="sd">    cannot be accessed directly.</span>
+
+<span class="sd">    Remember to terminate the current session using</span>
+<span class="sd">    :func:`gmt.clib.destroy_session` before creating a new one.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    api_pointer : C void pointer (returned by ctypes as an integer)</span>
+<span class="sd">        Used by GMT C API functions.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">libgmt</span> <span class="o">=</span> <span class="n">load_libgmt</span><span class="p">()</span>
+    <span class="n">c_create_session</span> <span class="o">=</span> <span class="n">libgmt</span><span class="o">.</span><span class="n">GMT_Create_Session</span>
+    <span class="n">c_create_session</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_uint</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_uint</span><span class="p">,</span>
+                                 <span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">]</span>
+    <span class="n">c_create_session</span><span class="o">.</span><span class="n">restype</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span>
+    <span class="c1"># None is passed in place of the print function pointer. It becomes the</span>
+    <span class="c1"># NULL pointer when passed to C, prompting the C API to use the default</span>
+    <span class="c1"># print function.</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">c_create_session</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">GMT_SESSION_NAME</span><span class="p">,</span>
+                               <span class="n">constants</span><span class="o">.</span><span class="n">GMT_PAD_DEFAULT</span><span class="p">,</span>
+                               <span class="n">constants</span><span class="o">.</span><span class="n">GMT_SESSION_EXTERNAL</span><span class="p">,</span>
+                               <span class="kc">None</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> \
+        <span class="s2">&quot;Failed creating GMT API pointer using create_session.&quot;</span>
+    <span class="k">return</span> <span class="n">session</span></div>
+
+
+<div class="viewcode-block" id="destroy_session"><a class="viewcode-back" href="../../../api/gmt.clib.destroy_session.html#gmt.clib.destroy_session">[docs]</a><span class="k">def</span> <span class="nf">destroy_session</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Terminate and free the memory of a registered ``GMTAPI_CTRL`` session.</span>
+
+<span class="sd">    .. warning::</span>
+
+<span class="sd">        Best not used directly. Use :class:`gmt.clib.GMTSession` instead.</span>
+
+<span class="sd">    The session is created and consumed by the C API modules and needs to be</span>
+<span class="sd">    freed before creating a new. Otherwise, some of the configuration files</span>
+<span class="sd">    might be left behind and can influence subsequent API calls.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    session : C void pointer (returned by ctypes as an integer)</span>
+<span class="sd">        The active session object produced by :func:`gmt.clib.create_session`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">libgmt</span> <span class="o">=</span> <span class="n">load_libgmt</span><span class="p">()</span>
+    <span class="n">c_destroy_session</span> <span class="o">=</span> <span class="n">libgmt</span><span class="o">.</span><span class="n">GMT_Destroy_Session</span>
+    <span class="n">c_destroy_session</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">]</span>
+    <span class="n">c_destroy_session</span><span class="o">.</span><span class="n">restype</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">c_destroy_session</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Failed returning None.&#39;</span>
+    <span class="k">assert</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Failed with status code </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">status</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GMTSession"><a class="viewcode-back" href="../../../api/gmt.clib.GMTSession.html#gmt.clib.GMTSession">[docs]</a><span class="k">class</span> <span class="nc">GMTSession</span><span class="p">():</span>  <span class="c1"># pylint: disable=too-few-public-methods</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Context manager to create a GMT C API session and destroy it.</span>
+
+<span class="sd">    Needs to be used when wrapping a GMT module into a function.</span>
+
+<span class="sd">    If creating GMT data structures to communicate data, put that code inside</span>
+<span class="sd">    this context manager and reuse the same session.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    &gt;&gt;&gt; with GMTSession() as session:</span>
+<span class="sd">    ...     call_module(session, &#39;figure&#39;, &#39;my-figure&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Start the GMT session and keep the session argument.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">create_session</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Destroy the session when exiting the context.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">destroy_session</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="kc">None</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/gmt-python-logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A Python interface for the Generic Mapping Tools</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../first-steps.html">First Steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://gmt.soest.hawaii.edu">GMT website</a></li>
+    
+    <li class="toctree-l1"><a href="http://gmt.soest.hawaii.edu/projects/gmt/wiki/Modernization">GMT modern mode</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/GenericMappingTools/gmt-python">Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://gitter.im/GenericMappingTools/gmt-python">Public chat room</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../gmt.html">gmt</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Leonardo Uieda.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+    <a href="https://github.com/GenericMappingTools/gmt-python" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

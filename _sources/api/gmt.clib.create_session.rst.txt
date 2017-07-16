@@ -1,0 +1,8 @@
+« :ref:`api`
+
+:mod:`gmt.clib`.create_session
+===========================================
+
+.. currentmodule:: gmt.clib
+
+.. autofunction:: create_session

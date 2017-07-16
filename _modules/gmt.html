@@ -1,0 +1,199 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>gmt &#8212; GMT/Python</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gmt</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">GMT Python interface</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">atexit</span> <span class="k">as</span> <span class="nn">_atexit</span>
+
+<span class="kn">from</span> <span class="nn">._version</span> <span class="k">import</span> <span class="n">get_versions</span> <span class="k">as</span> <span class="n">_get_versions</span>
+
+<span class="c1"># Import modules to make the high-level GMT Python API</span>
+<span class="kn">from</span> <span class="nn">.session_management</span> <span class="k">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">begin</span> <span class="k">as</span> <span class="n">_begin</span><span class="p">,</span> <span class="n">end</span> <span class="k">as</span> <span class="n">_end</span>
+<span class="kn">from</span> <span class="nn">.ps_modules</span> <span class="k">import</span> <span class="n">psconvert</span><span class="p">,</span> <span class="n">psbasemap</span><span class="p">,</span> <span class="n">psxy</span><span class="p">,</span> <span class="n">pscoast</span>
+<span class="kn">from</span> <span class="nn">.extra_modules</span> <span class="k">import</span> <span class="n">show</span>
+
+
+<span class="c1"># Get the version number through versioneer</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="n">_get_versions</span><span class="p">()[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span>
+
+<span class="c1"># Start our global modern mode session</span>
+<span class="n">_begin</span><span class="p">()</span>
+<span class="c1"># Tell Python to run _end when shutting down</span>
+<span class="n">_atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">_end</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="test"><a class="viewcode-back" href="../api/gmt.test.html#gmt.test">[docs]</a><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">doctest</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figures</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run the test suite.</span>
+
+<span class="sd">    Uses `py.test &lt;http://pytest.org/&gt;`__ to discover and run the tests. If you</span>
+<span class="sd">    haven&#39;t already, you can install it with `conda</span>
+<span class="sd">    &lt;http://conda.pydata.org/&gt;`__ or `pip &lt;https://pip.pypa.io/en/stable/&gt;`__.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    doctest : bool</span>
+<span class="sd">        If ``True``, will run the doctests as well (code examples that start</span>
+<span class="sd">        with a ``&gt;&gt;&gt;`` in the docs).</span>
+<span class="sd">    verbose : bool</span>
+<span class="sd">        If ``True``, will print extra information during the test run.</span>
+<span class="sd">    coverage : bool</span>
+<span class="sd">        If ``True``, will run test coverage analysis on the code as well.</span>
+<span class="sd">        Requires ``pytest-cov``.</span>
+<span class="sd">    figures : bool</span>
+<span class="sd">        If ``True``, will test generated figures against saved baseline</span>
+<span class="sd">        figures.  Requires ``pytest-mpl`` and ``matplotlib``.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+
+<span class="sd">    AssertionError</span>
+<span class="sd">        If pytest returns a non-zero error code indicating that some tests have</span>
+<span class="sd">        failed.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">pytest</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-vv&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">coverage</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;--cov=gmt&#39;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;--cov-report=term-missing&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">doctest</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;--doctest-modules&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">figures</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;--mpl&#39;</span><span class="p">)</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;--pyargs&#39;</span><span class="p">)</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;gmt&#39;</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Some tests have failed.&quot;</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/gmt-python-logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A Python interface for the Generic Mapping Tools</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first-steps.html">First Steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://gmt.soest.hawaii.edu">GMT website</a></li>
+    
+    <li class="toctree-l1"><a href="http://gmt.soest.hawaii.edu/projects/gmt/wiki/Modernization">GMT modern mode</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/GenericMappingTools/gmt-python">Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://gitter.im/GenericMappingTools/gmt-python">Public chat room</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Leonardo Uieda.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+    <a href="https://github.com/GenericMappingTools/gmt-python" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

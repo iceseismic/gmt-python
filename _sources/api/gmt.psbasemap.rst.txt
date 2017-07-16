@@ -1,0 +1,8 @@
+« :ref:`api`
+
+:mod:`gmt`.psbasemap
+=================================
+
+.. currentmodule:: gmt
+
+.. autofunction:: psbasemap

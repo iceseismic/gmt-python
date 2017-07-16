@@ -1,0 +1,8 @@
+« :ref:`api`
+
+:mod:`gmt`.figure
+==============================
+
+.. currentmodule:: gmt
+
+.. autofunction:: figure

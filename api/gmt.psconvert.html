@@ -1,0 +1,225 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>gmt.psconvert &#8212; GMT/Python</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="gmt.psxy" href="gmt.psxy.html" />
+    <link rel="prev" title="gmt.pscoast" href="gmt.pscoast.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>« <a class="reference internal" href="../api.html#api"><span class="std std-ref">API Reference</span></a></p>
+<div class="section" id="gmt-psconvert">
+<h1><code class="xref py py-mod docutils literal"><span class="pre">gmt</span></code>.psconvert<a class="headerlink" href="#gmt-psconvert" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="gmt.psconvert">
+<code class="descclassname">gmt.</code><code class="descname">psconvert</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gmt/ps_modules.html#psconvert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gmt.psconvert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert [E]PS file(s) to other formats.</p>
+<p>Converts one or more PostScript files to other formats (BMP, EPS, JPEG,
+PDF, PNG, PPM, SVG, TIFF) using GhostScript.</p>
+<p>If no input files are given, will convert the current active figure (see
+<a class="reference internal" href="gmt.figure.html#gmt.figure" title="gmt.figure"><code class="xref py py-func docutils literal"><span class="pre">gmt.figure</span></code></a>). In this case, an output name must be given using
+parameter <em>F</em>.</p>
+<p>Full option list at <a class="reference external" href="http://gmt.soest.hawaii.edu/doc/latest/psconvert.html">http://gmt.soest.hawaii.edu/doc/latest/psconvert.html</a></p>
+<p><strong>Aliases:</strong></p>
+<ul class="simple">
+<li>A = crop</li>
+<li>E = dpi</li>
+<li>F = prefix</li>
+<li>P = portrait</li>
+<li>T = fmt</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>A</strong> : str</p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">'[u][margins][-][+gpaint][+p[pen]][+r][+s[m]|Swidth[u]/height[u]]'</span></code>
+Adjust the BoundingBox and HiResBoundingBox to the minimum required by
+the image content. Append <code class="docutils literal"><span class="pre">u</span></code> to first remove any GMT-produced
+time-stamps.</p>
+</div></blockquote>
+<p><strong>C</strong> : str</p>
+<blockquote>
+<div><p>Specify a single, custom option that will be passed on to GhostScript
+as is.</p>
+</div></blockquote>
+<p><strong>E</strong> : int</p>
+<blockquote>
+<div><p>Set raster resolution in dpi. Default = 720 for PDF, 300 for others.</p>
+</div></blockquote>
+<p><strong>F</strong> : str</p>
+<blockquote>
+<div><p>Force the output file name. By default output names are constructed
+using the input names as base, which are appended with an appropriate
+extension. Use this option to provide a different name, but without
+extension. Extension is still determined automatically.</p>
+</div></blockquote>
+<p><strong>I</strong> : bool</p>
+<blockquote>
+<div><p>Enforce gray-shades by using ICC profiles.</p>
+</div></blockquote>
+<p><strong>P</strong> : bool</p>
+<blockquote>
+<div><p>Force Portrait mode. All Landscape mode plots will be rotated back so
+that they show unrotated in Portrait mode. This is practical when
+converting to image formats or preparing EPS or PDF plots for inclusion
+in documents.</p>
+</div></blockquote>
+<p><strong>Q</strong> : str</p>
+<blockquote>
+<div><p>Set the anti-aliasing options for graphics or text. Append the size of
+the subsample box (1, 2, or 4) [4]. Default is no anti-aliasing (same
+as bits = 1).</p>
+</div></blockquote>
+<p><strong>T</strong> : str</p>
+<blockquote class="last">
+<div><p>Sets the output format, where b means BMP, e means EPS, E means EPS
+with PageSize command, f means PDF, F means multi-page PDF, j means
+JPEG, g means PNG, G means transparent PNG (untouched regions are
+transparent), m means PPM, s means SVG, and t means TIFF [default is
+JPEG]. To bjgt you can append - in order to get a grayscale image. The
+EPS format can be combined with any of the other formats. For example,
+<code class="docutils literal"><span class="pre">'ef'</span></code> creates both an EPS and a PDF file. The <code class="docutils literal"><span class="pre">'F'</span></code> creates a
+multi-page PDF file from the list of input PS or PDF files. It requires
+the <em>F</em> option.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/gmt-python-logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A Python interface for the Generic Mapping Tools</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first-steps.html">First Steps</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#high-level-functions-for-gmt-modules">High-level functions for GMT modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#low-level-wrappers-for-the-gmt-c-api">Low-level wrappers for the GMT C API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://gmt.soest.hawaii.edu">GMT website</a></li>
+    
+    <li class="toctree-l1"><a href="http://gmt.soest.hawaii.edu/projects/gmt/wiki/Modernization">GMT modern mode</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/GenericMappingTools/gmt-python">Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://gitter.im/GenericMappingTools/gmt-python">Public chat room</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API Reference</a><ul>
+      <li>Previous: <a href="gmt.pscoast.html" title="previous chapter"><code class="docutils literal"><span class="pre">gmt</span></code>.pscoast</a></li>
+      <li>Next: <a href="gmt.psxy.html" title="next chapter"><code class="docutils literal"><span class="pre">gmt</span></code>.psxy</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Leonardo Uieda.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/api/gmt.psconvert.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/GenericMappingTools/gmt-python" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

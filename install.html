@@ -1,0 +1,194 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Installing &#8212; GMT/Python</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="First Steps" href="first-steps.html" />
+    <link rel="prev" title="GMT/Python" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="installing">
+<span id="install"></span><h1>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="which-python">
+<h2>Which Python?<a class="headerlink" href="#which-python" title="Permalink to this headline">¶</a></h2>
+<p>You’ll need <strong>Python 3.5 or greater</strong> to run GMT Python.</p>
+<p>We recommend using the <a class="reference external" href="https://www.continuum.io/downloads">Anaconda</a> Python distribution to ensure you have all
+dependencies installed and the <code class="docutils literal"><span class="pre">conda</span></code> package manager available.
+Installing Anaconda does not require administrative rights to your computer and
+doesn’t interfere with any other Python installations in your system.</p>
+</div>
+<div class="section" id="from-source">
+<h2>From source<a class="headerlink" href="#from-source" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal"><span class="pre">pip</span></code> to install the latest source from Github:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">GenericMappingTools</span><span class="o">/</span><span class="n">gmt</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="n">master</span><span class="o">.</span><span class="n">zip</span>
+</pre></div>
+</div>
+<p>If you have git installed, you can clone the repository and install using
+<code class="docutils literal"><span class="pre">pip</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">GenericMappingTools</span><span class="o">/</span><span class="n">gmt</span><span class="o">-</span><span class="n">python</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">gmt</span><span class="o">-</span><span class="n">python</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-gmt-trunk">
+<h2>Installing GMT trunk<a class="headerlink" href="#installing-gmt-trunk" title="Permalink to this headline">¶</a></h2>
+<p>You’ll need the current <em>trunk</em> version of GMT (future 6.0 release).
+One way to get it is from their Subversion repository.
+See the <a class="reference external" href="http://gmt.soest.hawaii.edu/projects/gmt/wiki/BuildingGMT">build instructions</a>.</p>
+<p>Alternatively, if you are on Linux and using the <a class="reference external" href="https://www.continuum.io/downloads">Anaconda</a> Python distribution,
+you can install a pre-compiled version as a conda package from <a class="reference external" href="https://conda-forge.github.io/">conda-forge</a>.
+First, install the required dependencies:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">fftw</span> <span class="n">gdal</span> <span class="n">ghostscript</span> <span class="n">libnetcdf</span> <span class="n">hdf5</span><span class="o">=</span><span class="mf">1.8</span><span class="o">.</span><span class="mf">18.</span><span class="o">*</span> <span class="n">zlib</span> <span class="n">blas</span> <span class="n">curl</span> <span class="n">pcre</span>
+</pre></div>
+</div>
+<p>Next, install the development version of GMT:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span><span class="o">/</span><span class="n">label</span><span class="o">/</span><span class="n">dev</span> <span class="n">gmt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="finding-the-library">
+<h2>Finding the library<a class="headerlink" href="#finding-the-library" title="Permalink to this headline">¶</a></h2>
+<p>After you have GMT installed, you’ll need to set the <code class="docutils literal"><span class="pre">LD_LIBRARY_PATH</span></code>
+variable so that <code class="docutils literal"><span class="pre">gmt-python</span></code> can find the shared library <code class="docutils literal"><span class="pre">libgmt</span></code>.</p>
+<p>If you installed GMT using conda, place the following in your <code class="docutils literal"><span class="pre">~/.bashrc</span></code>
+file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/anaconda3/lib
+</pre></div>
+</div>
+<p>You should change <code class="docutils literal"><span class="pre">$HOME/anaconda3</span></code> to wherever you installed Anaconda (this
+is the default for Linux).</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/gmt-python-logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A Python interface for the Generic Mapping Tools</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#which-python">Which Python?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#from-source">From source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-gmt-trunk">Installing GMT trunk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#finding-the-library">Finding the library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="first-steps.html">First Steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://gmt.soest.hawaii.edu">GMT website</a></li>
+    
+    <li class="toctree-l1"><a href="http://gmt.soest.hawaii.edu/projects/gmt/wiki/Modernization">GMT modern mode</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/GenericMappingTools/gmt-python">Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://gitter.im/GenericMappingTools/gmt-python">Public chat room</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">GMT/Python</a></li>
+      <li>Next: <a href="first-steps.html" title="next chapter">First Steps</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Leonardo Uieda.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/install.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/GenericMappingTools/gmt-python" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

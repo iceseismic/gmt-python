@@ -1,0 +1,8 @@
+« :ref:`api`
+
+:mod:`gmt`.test
+============================
+
+.. currentmodule:: gmt
+
+.. autofunction:: test

@@ -1,0 +1,8 @@
+« :ref:`api`
+
+:mod:`gmt`.show
+============================
+
+.. currentmodule:: gmt
+
+.. autofunction:: show

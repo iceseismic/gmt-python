@@ -1,0 +1,529 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>First Steps &#8212; GMT/Python</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api.html" />
+    <link rel="prev" title="Installing" href="install.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+<div class="section" id="First-Steps">
+<h1>First Steps<a class="headerlink" href="#First-Steps" title="Permalink to this headline">¶</a></h1>
+<p>This is an example of what you can already with GMT/Python. We’ll mostly
+reproduce some examples from the <a class="reference external" href="http://gmt.soest.hawaii.edu/doc/latest/GMT_Tutorial.html#session-one">GMT
+Tutorial</a>.</p>
+<div class="section" id="Loading-the-library">
+<h2>Loading the library<a class="headerlink" href="#Loading-the-library" title="Permalink to this headline">¶</a></h2>
+<p>The GMT modules are available as functions in the <code class="docutils literal"><span class="pre">gmt</span></code> Python
+package. See the <a class="reference external" href="api.html">API Reference</a> for a list of all
+available functions.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">gmt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="First-map">
+<h2>First map<a class="headerlink" href="#First-map" title="Permalink to this headline">¶</a></h2>
+<p>To start a new figure in GMT/Python, we need to explicitly call the
+<code class="docutils literal"><span class="pre">gmt.figure</span></code> function. After that we can start laying out the map with
+calls to other functions.</p>
+<p>For example, lets create a map of Central America.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Start a new figure.</span>
+<span class="n">gmt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="c1"># Create a Mercator map that is 6 inches wide</span>
+<span class="n">gmt</span><span class="o">.</span><span class="n">pscoast</span><span class="p">(</span><span class="n">R</span><span class="o">=</span><span class="s1">&#39;-90/-70/0/20&#39;</span><span class="p">,</span> <span class="n">J</span><span class="o">=</span><span class="s1">&#39;M6i&#39;</span><span class="p">,</span> <span class="n">G</span><span class="o">=</span><span class="s1">&#39;chocolate&#39;</span><span class="p">,</span>
+            <span class="n">S</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="s1">&#39;afg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The functions accept the same arguments that the GMT command-line. A
+general rule is that you can pass in everyting as strings. If an
+argument has no options (like <code class="docutils literal"><span class="pre">-P</span></code>), use a <code class="docutils literal"><span class="pre">True</span></code> value for it.</p>
+<p>Notice that there is no output redirecting to a PostScript file. This is
+all thanks to the new GMT <a class="reference external" href="http://gmt.soest.hawaii.edu/projects/gmt/wiki/Modernization">modern
+mode</a>
+that will be part of the future 6.0 release.</p>
+<p>Unlike the GMT command-line interface, no figure file was generated by
+this command. You can call <code class="docutils literal"><span class="pre">gmt.psconvert</span></code> if you want to save a
+figure. Or you can see the figure directly in the notebook using
+<code class="docutils literal"><span class="pre">gmt.show()</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">gmt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/first-steps_5_0.png" src="_images/first-steps_5_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Aliases-and-conversions">
+<h2>Aliases and conversions<a class="headerlink" href="#Aliases-and-conversions" title="Permalink to this headline">¶</a></h2>
+<p>GMT/Python defines long-form aliases for the command-line options to
+make the code more Pythonic and readble. The docstrings of the functions
+list the possible aliases:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">help</span><span class="p">(</span><span class="n">gmt</span><span class="o">.</span><span class="n">pscoast</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Help on function pscoast in module gmt.ps_modules:
+
+pscoast(**kwargs)
+    Plot continents, shorelines, rivers, and borders on maps
+
+    Plots grayshaded, colored, or textured land-masses [or water-masses] on
+    maps and [optionally] draws coastlines, rivers, and political boundaries.
+    Alternatively, it can (1) issue clip paths that will contain all land or
+    all water areas, or (2) dump the data to an ASCII table. The data files
+    come in 5 different resolutions: (**f**)ull, (**h**)igh,
+    (**i**)ntermediate, (**l**)ow, and (**c**)rude. The full resolution files
+    amount to more than 55 Mb of data and provide great detail; for maps of
+    larger geographical extent it is more economical to use one of the other
+    resolutions. If the user selects to paint the land-areas and does not
+    specify fill of water-areas then the latter will be transparent (i.e.,
+    earlier graphics drawn in those areas will not be overwritten).  Likewise,
+    if the water-areas are painted and no land fill is set then the land-areas
+    will be transparent.
+
+    A map projection must be supplied.
+
+    Full option list at http://gmt.soest.hawaii.edu/doc/latest/pscoast.html
+
+    **Aliases:**
+
+    - A = area_thresh
+    - B = frame
+    - D = resolution
+    - G = land
+    - I = rivers
+    - J = projection
+    - N = borders
+    - P = portrait
+    - R = region
+    - S = water
+    - W = shorelines
+
+    Parameters
+    ----------
+    J : str
+        *Required if this is the first plot command*.
+        Select map projection.
+    R : str or list
+        *Required if this is the first plot command*.
+        ``&#39;xmin/xmax/ymin/ymax[+r][+uunit]&#39;``.
+        Specify the region of interest.
+    A : int, float, or str
+        ``&#39;min_area[/min_level/max_level][+ag|i|s|S][+r|l][+ppercent]&#39;``
+        Features with an area smaller than min_area in km^2 or of hierarchical
+        level that is lower than min_level or higher than max_level will not be
+        plotted.
+    B : str
+        Set map boundary frame and axes attributes.
+    C : str
+        Set the shade, color, or pattern for lakes and river-lakes.
+    D : str
+        Selects the resolution of the data set to use ((f)ull, (h)igh,
+        (i)ntermediate, (l)ow, and (c)rude).
+    G : str
+        Select filling or clipping of “dry” areas.
+    I : str
+        ``&#39;river[/pen]&#39;``
+        Draw rivers. Specify the type of rivers and [optionally] append pen
+        attributes.
+    N : str
+        ``&#39;border[/pen]&#39;``
+        Draw political boundaries. Specify the type of boundary and
+        [optionally] append pen attributes
+    S : str
+        Select filling or clipping of “wet” areas.
+    U : bool or str
+        Draw GMT time stamp logo on plot.
+    W : str
+        ``&#39;[level/]pen&#39;``
+        Draw shorelines [Default is no shorelines]. Append pen attributes.
+
+</pre></div></div>
+</div>
+<p>Some options also accept values other than strings. For example, <code class="docutils literal"><span class="pre">R</span></code>
+(or <code class="docutils literal"><span class="pre">region</span></code>) can be passed as a list. This makes it easier to
+generate such arguments programatically.</p>
+<p>We can recreate the figure above using the aliases instead:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Calling figure again creates a new figure</span>
+<span class="n">gmt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">gmt</span><span class="o">.</span><span class="n">pscoast</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="o">-</span><span class="mi">70</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;M6i&#39;</span><span class="p">,</span>
+            <span class="n">land</span><span class="o">=</span><span class="s1">&#39;chocolate&#39;</span><span class="p">,</span> <span class="n">water</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span>
+            <span class="n">portrait</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;afg&#39;</span><span class="p">)</span>
+<span class="n">gmt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/first-steps_9_0.png" src="_images/first-steps_9_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="A-map-with-sample-data">
+<h2>A map with sample data<a class="headerlink" href="#A-map-with-sample-data" title="Permalink to this headline">¶</a></h2>
+<p>GMT ships some sample data that can be accessed using <code class="docutils literal"><span class="pre">&#64;data_file</span></code>.</p>
+<p>Lets plot some earthquake epicenters from the <code class="docutils literal"><span class="pre">tut_quakes.ngdc</span></code>
+dataset.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">gmt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">gmt</span><span class="o">.</span><span class="n">pscoast</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="p">[</span><span class="mi">130</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;M6i&#39;</span><span class="p">,</span>
+            <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;afg&#39;</span><span class="p">,</span> <span class="n">shorelines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">land</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">water</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">,)</span>
+<span class="n">gmt</span><span class="o">.</span><span class="n">psxy</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s1">&#39;@tut_quakes.ngdc&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;c0.3c&#39;</span><span class="p">,</span>
+         <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">pen</span><span class="o">=</span><span class="s1">&#39;faint&#39;</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="s1">&#39;4,3&#39;</span><span class="p">)</span>
+<span class="n">gmt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/first-steps_11_0.png" src="_images/first-steps_11_0.png" />
+</div>
+</div>
+<p>For now, <code class="docutils literal"><span class="pre">psxy</span></code> can only receive data from files.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/gmt-python-logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A Python interface for the Generic Mapping Tools</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">First Steps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Loading-the-library">Loading the library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#First-map">First map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Aliases-and-conversions">Aliases and conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#A-map-with-sample-data">A map with sample data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://gmt.soest.hawaii.edu">GMT website</a></li>
+    
+    <li class="toctree-l1"><a href="http://gmt.soest.hawaii.edu/projects/gmt/wiki/Modernization">GMT modern mode</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/GenericMappingTools/gmt-python">Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://gitter.im/GenericMappingTools/gmt-python">Public chat room</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="install.html" title="previous chapter">Installing</a></li>
+      <li>Next: <a href="api.html" title="next chapter">API Reference</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Leonardo Uieda.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/first-steps.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/GenericMappingTools/gmt-python" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

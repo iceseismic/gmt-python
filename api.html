@@ -1,0 +1,227 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>API Reference &#8212; GMT/Python</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="gmt.figure" href="api/gmt.figure.html" />
+    <link rel="prev" title="First Steps" href="first-steps.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="api-reference">
+<span id="api"></span><h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="high-level-functions-for-gmt-modules">
+<h2>High-level functions for GMT modules<a class="headerlink" href="#high-level-functions-for-gmt-modules" title="Permalink to this headline">¶</a></h2>
+<p>Each GMT module (<code class="docutils literal"><span class="pre">gmt</span> <span class="pre">pscoast</span></code>, <code class="docutils literal"><span class="pre">gmt</span> <span class="pre">psbasemap</span></code>, etc.) is wrapped by a
+function in the <code class="docutils literal"><span class="pre">gmt</span></code> top-level module.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/gmt.figure.html#gmt.figure" title="gmt.figure"><code class="xref py py-obj docutils literal"><span class="pre">gmt.figure</span></code></a>()</td>
+<td>Start a new figure.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/gmt.show.html#gmt.show" title="gmt.show"><code class="xref py py-obj docutils literal"><span class="pre">gmt.show</span></code></a>([dpi,&nbsp;width,&nbsp;return_img])</td>
+<td>Display the last figure in the Jupyter notebook</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/gmt.psbasemap.html#gmt.psbasemap" title="gmt.psbasemap"><code class="xref py py-obj docutils literal"><span class="pre">gmt.psbasemap</span></code></a>(**kwargs)</td>
+<td>Produce a basemap for the figure.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/gmt.pscoast.html#gmt.pscoast" title="gmt.pscoast"><code class="xref py py-obj docutils literal"><span class="pre">gmt.pscoast</span></code></a>(**kwargs)</td>
+<td>Plot continents, shorelines, rivers, and borders on maps</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/gmt.psconvert.html#gmt.psconvert" title="gmt.psconvert"><code class="xref py py-obj docutils literal"><span class="pre">gmt.psconvert</span></code></a>(**kwargs)</td>
+<td>Convert [E]PS file(s) to other formats.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/gmt.psxy.html#gmt.psxy" title="gmt.psxy"><code class="xref py py-obj docutils literal"><span class="pre">gmt.psxy</span></code></a>(data,&nbsp;**kwargs)</td>
+<td>Plot lines, polygons, and symbols on maps.</td>
+</tr>
+</tbody>
+</table>
+<p>Additional utility functions:</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/gmt.test.html#gmt.test" title="gmt.test"><code class="xref py py-obj docutils literal"><span class="pre">gmt.test</span></code></a>([doctest,&nbsp;verbose,&nbsp;coverage,&nbsp;figures])</td>
+<td>Run the test suite.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="low-level-wrappers-for-the-gmt-c-api">
+<h2>Low-level wrappers for the GMT C API<a class="headerlink" href="#low-level-wrappers-for-the-gmt-c-api" title="Permalink to this headline">¶</a></h2>
+<p>The GMT C API is accessed using <a class="reference external" href="https://docs.python.org/3/library/ctypes.html">ctypes</a>. The <code class="docutils literal"><span class="pre">gmt.clib</span></code> module offers
+functions and classes that wrap the C API with a pythonic interface.</p>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/gmt.clib.call_module.html#gmt.clib.call_module" title="gmt.clib.call_module"><code class="xref py py-obj docutils literal"><span class="pre">gmt.clib.call_module</span></code></a>(session,&nbsp;module,&nbsp;args)</td>
+<td>Call a GMT module with the given arguments.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/gmt.clib.create_session.html#gmt.clib.create_session" title="gmt.clib.create_session"><code class="xref py py-obj docutils literal"><span class="pre">gmt.clib.create_session</span></code></a>()</td>
+<td>Create the <code class="docutils literal"><span class="pre">GMTAPI_CTRL</span></code> struct required by the GMT C API functions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/gmt.clib.destroy_session.html#gmt.clib.destroy_session" title="gmt.clib.destroy_session"><code class="xref py py-obj docutils literal"><span class="pre">gmt.clib.destroy_session</span></code></a>(session)</td>
+<td>Terminate and free the memory of a registered <code class="docutils literal"><span class="pre">GMTAPI_CTRL</span></code> session.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/gmt.clib.load_libgmt.html#gmt.clib.load_libgmt" title="gmt.clib.load_libgmt"><code class="xref py py-obj docutils literal"><span class="pre">gmt.clib.load_libgmt</span></code></a>()</td>
+<td>Find and load <code class="docutils literal"><span class="pre">libgmt</span></code> as a ctypes.CDLL.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/gmt.clib.GMTSession.html#gmt.clib.GMTSession" title="gmt.clib.GMTSession"><code class="xref py py-obj docutils literal"><span class="pre">gmt.clib.GMTSession</span></code></a>()</td>
+<td>Context manager to create a GMT C API session and destroy it.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/gmt-python-logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A Python interface for the Generic Mapping Tools</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="first-steps.html">First Steps</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#high-level-functions-for-gmt-modules">High-level functions for GMT modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#low-level-wrappers-for-the-gmt-c-api">Low-level wrappers for the GMT C API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://gmt.soest.hawaii.edu">GMT website</a></li>
+    
+    <li class="toctree-l1"><a href="http://gmt.soest.hawaii.edu/projects/gmt/wiki/Modernization">GMT modern mode</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/GenericMappingTools/gmt-python">Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://gitter.im/GenericMappingTools/gmt-python">Public chat room</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="first-steps.html" title="previous chapter">First Steps</a></li>
+      <li>Next: <a href="api/gmt.figure.html" title="next chapter"><code class="docutils literal"><span class="pre">gmt</span></code>.figure</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Leonardo Uieda.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/GenericMappingTools/gmt-python" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

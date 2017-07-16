@@ -1,0 +1,8 @@
+« :ref:`api`
+
+:mod:`gmt.clib`.destroy_session
+============================================
+
+.. currentmodule:: gmt.clib
+
+.. autofunction:: destroy_session
